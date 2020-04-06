@@ -5,11 +5,12 @@ const gm = require('gm')
 // brew install imagemagick
 // brew install graphicsmagick
 
-// a1 - 20
-// a2 - 12
-// a4 - 10
+// a1 - 20 + 35		= 55 	= 80
+// a2 - 12 + 20		= 32	= 50
+// a4 - 10 + 8.5	= 18.5	= 30
 
 const templateList = [
+	{ url: 'frame.png', x: 161, y: 46, width: 480 },
 	{ url: 'bg-1.png', x: 329, y: 110, width: 303 },
 	{ url: 'bg-2.png', x: 1475, y: 185, width: 521 },
 	{ url: 'bg-3.png', x: 969, y: 152, width: 318 },
