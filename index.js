@@ -2,6 +2,9 @@ const images = require('images')
 const fs = require('fs-extra')
 const gm = require('gm')
 
+// brew install imagemagick
+// brew install graphicsmagick
+
 // a1 - 20
 // a2 - 12
 // a4 - 10
@@ -24,21 +27,21 @@ const cropImages = async imagePath =>
 			.resize(595, 881, '^')
 			.gravity('Center')
 			.crop(595, 881)
-			.write('./input/' + imagePath, () => resolve())
+			.write(inputPath + '/' + imagePath, e => resolve())
 	)
 
-const makeHighRes = async (imagePath, folder) =>
-	new Promise(resolve =>
-		gm('./source_images/' + imagePath)
-			.resize(7016, 9933, '^')
-			.density(7016, 9933)
-			.units('PixelsPerInch')
-			.gravity('Center')
-			.crop(7016, 9933)
-			.write(outputPath + '/' + folder + '/' + 'highRes.png', () =>
-				resolve()
-			)
-	)
+// const makeHighRes = async (imagePath, folder) =>
+// 	new Promise(resolve =>
+// 		gm('./source_images/' + imagePath)
+// 			.resize(7016, 9933, '^')
+// 			.density(7016, 9933)
+// 			.units('PixelsPerInch')
+// 			.gravity('Center')
+// 			.crop(7016, 9933)
+// 			.write(outputPath + '/' + folder + '/' + 'highRes.png', () =>
+// 				resolve()
+// 			)
+// 	)
 
 const makeDefault = async (imagePath, folder) =>
 	new Promise(resolve =>
@@ -46,9 +49,7 @@ const makeDefault = async (imagePath, folder) =>
 			.resize(1240, 1748, '^')
 			.gravity('Center')
 			.crop(1240, 1748)
-			.write(outputPath + '/' + folder + '/' + 'default.png', () =>
-				resolve()
-			)
+			.write(outputPath + '/' + folder + '/' + 'default.png', () => resolve())
 	)
 
 const cleanupFolders = async () => {
@@ -58,7 +59,7 @@ const cleanupFolders = async () => {
 		await fs.removeSync(inputPath)
 	}
 
-	fs.mkdirSync(inputPath)
+	await fs.mkdirSync(inputPath)
 
 	const outputFolder = await fs.existsSync(outputPath)
 
@@ -66,17 +67,16 @@ const cleanupFolders = async () => {
 		await fs.removeSync(outputPath)
 	}
 
-	fs.mkdirSync(outputPath)
+	await fs.mkdirSync(outputPath)
 }
 
 const generateWebImages = async () => {
-	const imageList = await fs
-		.readdirSync('./source_images/')
-		.filter(item => item !== '.DS_Store')
+	const imageList = await fs.readdirSync('./source_images/').filter(item => item !== '.DS_Store')
 
 	for (const image of imageList) {
 		console.log('Proccess: ', image)
 		await cropImages(image)
+
 		const folderName = image.substring(0, image.lastIndexOf('.'))
 		const folderExists = await fs.existsSync(outputPath + '/' + folderName)
 
@@ -85,7 +85,6 @@ const generateWebImages = async () => {
 		}
 
 		await makeDefault(image, folderName)
-		// await makeHighRes(image, folderName)
 
 		for (const { url, x, y, width } of templateList) {
 			images('templates/' + url)
