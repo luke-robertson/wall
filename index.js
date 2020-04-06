@@ -10,12 +10,12 @@ const gm = require('gm')
 // a4 - 10
 
 const templateList = [
-	{ url: 'bg-1.png', x: 328, y: 108, width: 305 },
-	{ url: 'bg-2.png', x: 1400, y: 115, width: 628 },
-	{ url: 'bg-3.png', x: 967, y: 149, width: 321 },
-	{ url: 'bg-4.png', x: 839, y: 267, width: 424 },
-	{ url: 'bg-5.png', x: 320, y: 596, width: 297 },
-	{ url: 'bg-6.png', x: 1000, y: 468, width: 190 }
+	{ url: 'bg-1.png', x: 329, y: 110, width: 303 },
+	{ url: 'bg-2.png', x: 1475, y: 185, width: 521 },
+	{ url: 'bg-3.png', x: 969, y: 152, width: 318 },
+	{ url: 'bg-4.png', x: 874, y: 281, width: 355 },
+	{ url: 'bg-5.png', x: 320, y: 601, width: 289 },
+	{ url: 'bg-6.png', x: 1003, y: 473, width: 187 }
 ]
 
 const inputPath = './input'
